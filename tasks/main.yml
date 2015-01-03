@@ -1,0 +1,15 @@
+---
+
+- name: Install Redis
+  apt: name={{ item }} state=present
+  with_items:
+   - redis-server
+  tags: redis
+
+- name: Configure Redis
+  template: src=redis.conf.j2 dest=/etc/redis/redis.conf
+  notify: restart redis-server
+  tags: redis
+
+# @todo add the monit files if installed
+# @todo add munin plugins if installed
